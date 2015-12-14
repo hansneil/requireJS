@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>require.js 入门</title>
+<style>
+.wrapper {
+	width: 200px;
+	height: 200px;
+	background: gray;
+}
+p {
+	width: 200px;
+	background: gray;
+}
+</style>
+</head>
+
+<body>
+    <!--requireJS 入门 2-----------
+    <div class="wrapper">
+    </div>
+    <script data-main="js/main" src="require.js"></script>-->
+    <!--requireJS 入门 3----------->
+    <!-- 
+    <p id="first">p1</p>
+    <p>p2</p>
+    <p>p3</p>
+    <p>p4</p>
+    <p>p5</p>
+    <script data-main="js/main" src="require.js"></script>
+    -->
+    <!--requireJS2.0
+    1.延迟模块的执行，可以等到require的时候再执行，消除了立即执行的诟病
+    2.config增加了更多的参数:
+    	[1]shim:解决了采用非AMD方式定义的模块及其执行顺序 (shim在js中通常表示将一个新的API引入到旧的环境中)
+           代替了1.0中的order插件
+        require.config({
+        	shim: {
+            	"jquery-slide": ["jQuery"]
+            }
+        });
+        [2]map:解决同一模块的不同版本问题
+        require.config({
+        	map: {
+            	"A": {
+                	"jquery": "jquery-1.6.4"
+                },
+                "B": {
+                	"jquery": "jquery-1.7.1"
+                }
+            }
+        });
+        require(["A"]); //下载jquery-1.6.4
+        require(["B"]); //下载jquery-1.7.1
+        [3]config:给模块传递一些有用的参数
+        require.config({
+        	config: {
+            	"A": {
+                	info: {name: "jack"}
+                }
+            }
+        });
+        require(["A"], function(A){
+        	var info = A.config().info;
+            console.log(info);
+        });
+        [4]enforceDefine:强制模块使用define定义
+    3.require增加了第三个参数errbacks:指模块没有载入成功时的回调
+    require(['jquery'], function(){
+    	console.log('success');
+    }, function(err) {
+    	console.log(err);
+    });
+    4.更强大的paths参数
+    require.config({
+    	paths: {
+        	'jquery': [
+            	'http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min',
+            	'lib/jquery'
+            ]
+        }
+    });
+    当无法下载第一个jquery时会使用第二个-->
+    <!--requireJS 进阶 1----------->
+    <!-- 
+    <p>p1</p>
+    <p>p2</p>
+    <p>p3</p>
+    <p>p4</p>
+    <p>p5</p>
+    <script data-main="built" src="require.js"></script>
+    使用r.js对文件进行打包,相关指令:
+    node r.js -o baseUrl=js name=main out=built.js
+    其他参数:
+    	-excludeShallow=selector [排除某个文件]
+        -optimize=none[只合并不压缩]
+    -->    
+    <!--requireJS 进阶 2----------->
+    1.如果此时请求的jquery文件是来自其他网站的，这时候打包时会发生错误，需要paths参数来解决
+    node r.js -o baseUrl=js name=main out=built.js paths.jquery=empty: [注意最后的':']
+    
+    2.压缩CSS
+    main.css为主文件，需要在主文件中加入以下语句
+    @import url("nav.css");
+    @import url("grid.css");
+    @import url("form.css");
+    
+    node r.js -o cssIn=css/main out=css/built.css
+</body>
+</html>
